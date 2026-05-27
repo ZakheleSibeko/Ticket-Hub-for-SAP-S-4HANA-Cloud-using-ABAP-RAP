@@ -1,0 +1,10 @@
+@EndUserText.label: 'Access control for Ticket hub'
+@MappingRole: true
+define role ZR_TH_EVENT {
+    grant select on ZI_TH_EVENT 
+                    where (
+                          CreatedBy = $session.user
+                          or Status = 'APPROVED' 
+                         ); 
+                        
+}

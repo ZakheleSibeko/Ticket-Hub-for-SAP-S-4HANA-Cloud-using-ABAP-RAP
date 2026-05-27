@@ -1,0 +1,139 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Customer',
+    typeNamePlural: 'Customers',
+    title: {
+      type: #STANDARD,
+      value: 'FirstName'
+    },
+    description: {
+      type: #STANDARD,
+      value: 'Email'
+    }
+  }
+}
+annotate view ZC_TH_CUSTOMER with
+{
+  @UI.facet: [
+    {
+      id: 'CustomerGeneral',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Customer Details',
+      position: 10
+    },
+    {
+      id: 'ContactInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Contact Information',
+      position: 20,
+      targetQualifier: 'ContactInfo'
+    },
+    {
+      id: 'AddressInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Address Information',
+      position: 30,
+      targetQualifier: 'AddressInfo'
+    }
+  ] 
+
+  @UI.hidden: true
+  CustomerId;
+
+  @UI.lineItem: [
+    { position: 10, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 10 }
+  ]
+  @UI.selectionField: [
+    { position: 10 }
+  ]
+  FirstName;
+
+  @UI.lineItem: [
+    { position: 20, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 20 }
+  ]
+  @UI.selectionField: [
+    { position: 20 }
+  ]
+  LastName;
+
+  @UI.lineItem: [
+    { position: 30, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 30 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'ContactInfo', position: 10 }
+  ]
+  @UI.selectionField: [
+    { position: 30 }
+  ]
+  Email;
+
+  @UI.lineItem: [
+    { position: 40, importance: #MEDIUM }
+  ]
+  @UI.identification: [
+    { position: 40 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'ContactInfo', position: 20 }
+  ]
+  phone;
+
+  @UI.lineItem: [
+    { position: 50, importance: #MEDIUM }
+  ]
+  @UI.identification: [
+    { position: 50 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'AddressInfo', position: 10 }
+  ]
+  @UI.selectionField: [
+    { position: 40 }
+  ]
+  City;
+
+  @UI.lineItem: [
+    { position: 60, importance: #MEDIUM }
+  ]
+  @UI.identification: [
+    { position: 60 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'AddressInfo', position: 20 }
+  ]
+  CountryCode;
+
+  @UI.lineItem: [
+    { position: 70, importance: #MEDIUM }
+  ]
+  @UI.identification: [
+    { position: 70 }
+  ]
+  @UI.selectionField: [
+    { position: 50 }
+  ]
+  Status;
+
+  @UI.identification: [
+    { position: 80 }
+  ]
+  CreatedAt;
+
+  @UI.identification: [
+    { position: 90 }
+  ]
+  LastChangedAt;
+}

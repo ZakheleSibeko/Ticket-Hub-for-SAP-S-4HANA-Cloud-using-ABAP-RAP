@@ -1,0 +1,63 @@
+managed implementation in class zbp_i_th_customer unique;
+strict ( 2 );
+
+with draft;
+
+define behavior for ZI_TH_CUSTOMER alias Customer
+persistent table zth_customer
+draft table zth_customer_d
+lock master total etag LastChangedAt
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Resume;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare {
+   validation ValidateEmail;
+   validation ValidateMandatoryNames;
+   validation ValidatePhoneNumber;
+   validation ValidateCountryCode;
+   validation ValidateStatusTransition;
+  }
+  field ( readonly ) CustomerId, CreatedBy, CreatedAt, LastChangedBy, LastChangedAt;
+  field ( mandatory ) FirstName, LastName, Email, CountryCode;
+
+  action ActivateCustomer result [1] $self;
+  action BlockCustomer result [1] $self;
+  action SetVIPCustomer result [1] $self;
+  action DeactivateCustomer result [1] $self;
+
+  validation ValidateEmail on save { create; update; }
+  validation ValidateMandatoryNames on save { create; update; }
+  validation ValidatePhoneNumber on save { create; update; }
+  validation ValidateCountryCode on save { create; update; }
+  validation ValidateStatusTransition on save { create; update; }
+
+  determination SetInitialStatus on modify { create; }
+  determination NormalizeCustomerData on modify { create; update; }
+
+  mapping for zth_customer
+  {
+      CustomerId            = customer_id;
+      FirstName             = first_name;
+      LastName              = last_name;
+      Email                 = email;
+      PhoneNumber           = phone_number;
+      City                  = city;
+      CountryCode           = country_code;
+      DateOfBirth           = date_of_birth;
+      Newsletter            = newsletter;
+      Status                = status;
+      CreatedBy             = created_by;
+      CreatedAt             = created_at;
+      LastChangedBy         = last_changed_by;
+      LastChangedAt         = last_changed_at;
+      LocalLastChangedAt    = local_last_changed_at;
+  }
+}

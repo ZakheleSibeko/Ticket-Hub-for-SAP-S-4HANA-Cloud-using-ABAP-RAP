@@ -1,0 +1,58 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_TH_EVENT alias Event
+{
+  use create;
+  use update;
+  use delete;
+
+  use action SubmitForApproval;
+  use action ApproveEvent;
+  use action RejectEvent;
+  use action CancelEvent;
+  use action CloseEvent;
+
+  use action Edit;
+  use action Resume;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+
+  use association _Booking { create; with draft; }
+  use association _Ticket_type { create; with draft; }
+  use association _Booking_item { create; with draft; }
+}
+
+define behavior for ZC_TH_BOOKING alias Booking
+{
+
+  use update;
+  use delete;
+
+  use action ConfirmBooking;
+  use action CancelBooking;
+  use action GenerateInvoice;
+  use action IssueTicket;
+
+  use association _Event { with draft; }
+//  use association _Booking_item { create; with draft; }
+}
+
+define behavior for ZC_TH_TICKET_TYPE alias TicketType
+{
+  use update;
+  use delete;
+
+  use association _Event { with draft; }
+
+}
+define behavior for ZC_TH_BOOKING_ITEM alias BookingItem
+{
+  use update;
+  use delete;
+
+//  use association _Booking { with draft; }
+  use association _Event   { with draft; }
+}

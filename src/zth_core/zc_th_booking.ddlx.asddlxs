@@ -1,0 +1,189 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Booking',
+    typeNamePlural: 'Bookings',
+    title: {
+      type: #STANDARD,
+      value: 'BookingId'
+    },
+    description: {
+      type: #STANDARD,
+      value: 'Status'
+    }
+  }
+}
+annotate view ZC_TH_BOOKING with
+{
+  @UI.facet: [
+    {
+      id: 'BookingGeneral',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Booking Details',
+      position: 10
+    },
+    {
+      id: 'BookingItems',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      label: 'Booking Items',
+      position: 20,
+      targetElement: '_Booking_Item'
+    },
+    {
+      id: 'EventInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Event Information',
+      position: 30,
+      targetQualifier: 'EventInfo'
+    },
+    {
+      id: 'CustomerInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Customer Information',
+      position: 40,
+      targetQualifier: 'CustomerInfo'
+    },
+    {
+      id: 'AmountInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Amount Details',
+      position: 50,
+      targetQualifier: 'AmountInfo'
+    }
+  ] 
+
+  @UI.lineItem: [
+    { position: 10, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 10 }
+  ]
+  BookingId;
+
+  @UI.lineItem: [
+    { position: 20, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 20 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'EventInfo', position: 10 }
+  ]
+  @UI.selectionField: [
+    { position: 10 }
+  ]
+  EventId;
+
+  @UI.lineItem: [
+    { position: 30, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 30 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'CustomerInfo', position: 10 }
+  ]
+  @UI.selectionField: [
+    { position: 20 }
+  ]
+  CustomerId;
+
+  @UI.lineItem: [
+    { position: 40, importance: #MEDIUM }
+  ]
+  @UI.identification: [
+    { position: 40 }
+  ]
+  @UI.selectionField: [
+    { position: 30 }
+  ]
+  BookingDate;
+
+  @UI.lineItem: [
+    { position: 50, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 50 }
+  ]
+  @UI.selectionField: [
+    { position: 40 }
+  ]
+  Status;
+
+  @UI.lineItem: [
+    { position: 60, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 60 }
+  ]
+  @UI.selectionField: [
+    { position: 50 }
+  ]
+  PaymentStatus;
+
+  @UI.lineItem: [
+    { position: 70, importance: #MEDIUM }
+  ]
+  @UI.identification: [
+    { position: 70 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'AmountInfo', position: 10 }
+  ]
+  GrossAmount;
+
+  @UI.identification: [
+    { position: 80 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'AmountInfo', position: 20 }
+  ]
+  DiscountAmount;
+
+  @UI.identification: [
+    { position: 90 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'AmountInfo', position: 30 }
+  ]
+  TaxAmount;
+
+  @UI.lineItem: [
+    { position: 80, importance: #HIGH }
+  ]
+  @UI.identification: [
+    { position: 100 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'AmountInfo', position: 40 }
+  ]
+  NetAmount;
+
+  @UI.identification: [
+    { position: 110 }
+  ]
+  @UI.fieldGroup: [
+    { qualifier: 'AmountInfo', position: 50 }
+  ]
+  CurrencyCode;
+
+  @UI.identification: [
+    { position: 120 }
+  ]
+  CreatedBy;
+
+  @UI.identification: [
+    { position: 130 }
+  ]
+  CreatedAt;
+
+  @UI.identification: [
+    { position: 140 }
+  ]
+  LastChangedAt;
+}

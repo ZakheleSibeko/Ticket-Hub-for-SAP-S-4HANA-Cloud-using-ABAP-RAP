@@ -1,0 +1,7 @@
+@EndUserText.label: 'Ticket Hub Event Service'
+define service ZUI_TH_EVENT {
+  expose ZC_TH_EVENT;
+  expose ZC_TH_TICKET_TYPE;
+  expose ZC_TH_BOOKING;
+  expose ZC_TH_CUSTOMER;
+}
