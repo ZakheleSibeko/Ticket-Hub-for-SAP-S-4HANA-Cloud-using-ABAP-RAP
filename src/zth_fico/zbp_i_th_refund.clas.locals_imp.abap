@@ -180,7 +180,7 @@ CLASS lhc_ZI_TH_REFUND IMPLEMENTATION.
 
      READ ENTITIES OF ZI_TH_REFUND IN LOCAL MODE
                 ENTITY Refund
-                FIELDS ( Status )
+                FIELDS ( RefundAmount )
                 WITH CORRESPONDING #( keys )
                 RESULT DATA(lt_refunds).
 
