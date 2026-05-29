@@ -1,0 +1,50 @@
+managed implementation in class zbp_i_th_vendor unique;
+strict ( 2 );
+
+with draft;
+
+define behavior for ZI_TH_VENDOR alias Vendor
+persistent table zth_vendor
+draft table zth_vendor_d
+lock master total etag LastChangedAt
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) VendorId;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+  field ( mandatory ) VendorName, VendorType, Email, Phone;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Resume;
+  draft action Discard;
+  draft determine action Prepare {
+   validation ValidateVendorDetails;
+   validation VaildateVendorStatus;
+  }
+
+  action RegisterVendor result [1] $self;
+  action DeleteVendor   result [1] $self;
+  action ActivateVendor     result [1] $self;
+
+  validation ValidateVendorDetails on save { create; update; }
+  validation VaildateVendorStatus  on save { create; update; }
+
+  determination SetInitialStatus on modify { create; }
+
+  mapping for zth_vendor {
+          VendorId       = vendor_id;
+          VendorName     = vendor_name;
+          VendorType     = vendor_type;
+          Email          = email;
+          Phone          = phone;
+          Status         = status;
+          CreatedBy      = created_by;
+          CreatedAt      = created_at;
+          LastChangedBy  = last_changed_by;
+          LastChangedAt  = last_changed_at;
+  }
+}
