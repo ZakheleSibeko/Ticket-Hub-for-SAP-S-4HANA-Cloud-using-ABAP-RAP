@@ -1,0 +1,35 @@
+managed implementation in class zbp_i_th_event_cost unique;
+strict ( 2 );
+
+define behavior for ZI_TH_EVENT_COST alias EventCost
+persistent table zth_event_cost
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) CostId;
+  field ( mandatory ) EventId, CostCategory, Amount, CurrencyCode, PostingDate;
+
+  action ApproveCost result [1] $self;
+  validation ValidateAmount on save { create; update; }
+  determination SetInitialStatus on modify { create; }
+
+  mapping for zth_event_cost {
+      CostId               = cost_id;
+      EventId              = event_id;
+      CostCategory         = cost_category;
+      Description          = description;
+      Amount               = amount;
+      CurrencyCode         = currency_code;
+      VendorId             = vendor_id;
+      PostingDate          = posting_date;
+      Status               = status;
+      CreatedBy            = created_by;
+      CreatedAt            = created_at;
+      LocalLastchangedBy   = local_lastchanged_by;
+      LocalLastchangedAt   = local_lastchanged_at;
+  }
+}

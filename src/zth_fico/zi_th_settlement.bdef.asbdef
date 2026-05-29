@@ -1,0 +1,33 @@
+managed implementation in class zbp_i_th_settlement unique;
+strict ( 2 );
+
+define behavior for ZI_TH_SETTLEMENT alias Settlement
+persistent table zth_settlement
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) SettlementId;
+
+  action GenerateSettlement result [1] $self;
+
+  determination setInitialStatus on modify { create; }
+
+  mapping for zth_settlement {
+      SettlementId         = settlement_id;
+      EventId              = event_id;
+      GrossRevenue         = gross_revenue;
+      RefundAmount         = refund_amount;
+      TotalCost            = total_cost;
+      PlatformCommission   = platform_commission;
+      NetSettlement        = net_settlement;
+      Status               = status;
+      CreatedBy            = created_by;
+      CreatedAt            = created_at;
+      LocalLastchangedBy   = local_lastchanged_by;
+      LocalLastchangedAt   = local_lastchanged_at;
+  }
+}

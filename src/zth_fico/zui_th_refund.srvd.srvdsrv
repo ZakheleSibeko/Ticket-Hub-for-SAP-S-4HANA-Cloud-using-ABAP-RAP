@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition'
+define service ZUI_TH_REFUND {
+  expose ZC_TH_REFUND;
+}

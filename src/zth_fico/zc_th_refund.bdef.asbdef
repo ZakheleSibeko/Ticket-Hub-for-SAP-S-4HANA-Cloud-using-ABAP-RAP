@@ -1,0 +1,21 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_TH_REFUND alias Refund
+{
+  use create;
+  use update;
+  use delete;
+
+  use action submitRefund;
+  use action rejectRefund;
+  use action approveRefund;
+
+  use action Resume;
+  use action Discard;
+  use action Activate;
+  use action Edit;
+  use action Prepare;
+
+}

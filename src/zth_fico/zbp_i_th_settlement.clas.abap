@@ -1,0 +1,5 @@
+CLASS zbp_i_th_settlement DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_settlement.
+ENDCLASS.
+
+CLASS zbp_i_th_settlement IMPLEMENTATION.
+ENDCLASS.

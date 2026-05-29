@@ -1,0 +1,63 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: {
+    typeName: 'Refund',
+    typeNamePlural: 'Refunds',
+    title: {
+      type: #STANDARD,
+      value: 'RefundId'
+    },
+    description: {
+      type: #STANDARD,
+      value: 'RefundReason'
+    }
+  }
+}
+
+annotate view ZC_TH_REFUND with
+{
+
+  @UI.facet: [
+    {
+      id: 'RefundInfo',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Refund Information',
+      position: 10
+    }
+  ]
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  BookingId;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  CustomerId;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  RefundDate;
+
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  RefundReason;
+
+  @UI.lineItem: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  RefundAmount;
+
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  CurrencyCode;
+
+  @UI.lineItem: [{ position: 70 }]
+  @UI.identification: [{ position: 70 }]
+  Status;
+
+  @UI.lineItem: [{ position: 80 }]
+  @UI.identification: [{ position: 80 }]
+  ApprovedBy;
+
+}

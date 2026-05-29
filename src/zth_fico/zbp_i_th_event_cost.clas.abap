@@ -1,0 +1,5 @@
+CLASS zbp_i_th_event_cost DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_event_cost.
+ENDCLASS.
+
+CLASS zbp_i_th_event_cost IMPLEMENTATION.
+ENDCLASS.

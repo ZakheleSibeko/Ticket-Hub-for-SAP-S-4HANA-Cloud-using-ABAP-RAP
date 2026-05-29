@@ -1,0 +1,51 @@
+managed implementation in class zbp_i_th_refund unique;
+strict ( 2 );
+
+with draft;
+define behavior for ZI_TH_REFUND alias Refund
+persistent table zth_refund
+draft table zth_refund_d
+lock master total etag LocalLastchangedAt
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  draft action Resume;
+  draft action Discard;
+  draft action Activate optimized;
+  draft action Edit;
+  draft determine action Prepare {
+  validation validateRefundAmount;
+  }
+  field ( readonly, numbering : managed ) RefundId;
+  field ( mandatory ) CustomerId, RefundAmount, RefundDate;
+  field ( readonly ) ApprovedAt, ApprovedBy, CreatedAt, CreatedBy, LocalLastchangedAt, LocalLastchangedBy;
+
+  action submitRefund result [1] $self;
+  action rejectRefund result [1] $self;
+  action approveRefund result [1] $self;
+
+  validation validateRefundAmount on save { create; update; }
+
+  determination SetInitialRefundStatus on modify { create; }
+
+  mapping for zth_refund {
+      RefundId             = refund_id;
+      BookingId            = booking_id;
+      CustomerId           = customer_id;
+      RefundDate           = refund_date;
+      RefundAmount         = refund_amount;
+      RefundReason         = refund_reason;
+      Status               = status;
+      CurrencyCode         = currency_code;
+      ApprovedBy           = approved_by;
+      ApprovedAt           = approved_at;
+      CreatedBy            = created_by;
+      CreatedAt            = created_at;
+      LocalLastchangedBy   = local_lastchanged_by;
+      LocalLastchangedAt   = local_lastchanged_at;
+  }
+}
