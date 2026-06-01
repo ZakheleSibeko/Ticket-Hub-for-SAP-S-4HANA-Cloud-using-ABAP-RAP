@@ -1,0 +1,5 @@
+CLASS zbp_i_th_supp_invoice DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_supp_invoice.
+ENDCLASS.
+
+CLASS zbp_i_th_supp_invoice IMPLEMENTATION.
+ENDCLASS.

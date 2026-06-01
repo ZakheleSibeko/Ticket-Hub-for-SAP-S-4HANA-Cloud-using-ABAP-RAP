@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition'
+define service ZUI_TH_MM {
+  expose ZC_TH_VENDOR;
+}

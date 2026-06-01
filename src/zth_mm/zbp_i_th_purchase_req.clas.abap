@@ -1,0 +1,5 @@
+CLASS zbp_i_th_purchase_req DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_purchase_req.
+ENDCLASS.
+
+CLASS zbp_i_th_purchase_req IMPLEMENTATION.
+ENDCLASS.

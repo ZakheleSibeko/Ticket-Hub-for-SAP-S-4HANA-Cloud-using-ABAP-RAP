@@ -14,5 +14,7 @@ as projection on ZI_TH_VENDOR
     CreatedBy,
     CreatedAt,
     LastChangedBy,
-    LastChangedAt
+    LastChangedAt,
+    LocalLastChangedBy,
+    LocalLastChangedAt
 }

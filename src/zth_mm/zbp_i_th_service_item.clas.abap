@@ -1,0 +1,5 @@
+CLASS zbp_i_th_service_item DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_service_item.
+ENDCLASS.
+
+CLASS zbp_i_th_service_item IMPLEMENTATION.
+ENDCLASS.

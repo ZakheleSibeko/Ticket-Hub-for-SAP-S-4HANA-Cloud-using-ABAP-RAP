@@ -4,7 +4,6 @@
 define view entity ZI_TH_PUR_REQ_ITEM
   as select from zth_pur_req_item
   association     to parent ZI_TH_PURCHASE_REQ as _PurchaseReq on $projection.PrId = _PurchaseReq.PrId
-
   association [1] to ZI_TH_SERVICE_ITEM        as _Service     on $projection.ServiceId = _Service.ServiceId
 {
   key pr_item_id    as PrItemId,

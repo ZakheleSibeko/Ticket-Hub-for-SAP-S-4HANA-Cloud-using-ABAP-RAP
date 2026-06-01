@@ -1,0 +1,5 @@
+CLASS zbp_i_th_purch_order DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_purch_order.
+ENDCLASS.
+
+CLASS zbp_i_th_purch_order IMPLEMENTATION.
+ENDCLASS.

@@ -1,0 +1,42 @@
+managed implementation in class zbp_i_th_service_item unique;
+strict ( 2 );
+
+define behavior for ZI_TH_SERVICE_ITEM alias ServiceItem
+persistent table zth_service_item
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) ServiceId;
+  field ( readonly ) CreatedBy, CreatedAt, LastChangedBy, LastChangedAt;
+  field ( mandatory ) UnitPrice, ServiceName;
+
+  action Activates result [1] $self;
+  action Deactivate result [1] $self;
+
+  validation ValidatePrice on save { create; update; }
+  determination SetInitialStatus on modify { create; }
+
+  mapping for zth_service_item
+    {
+      ServiceId       = service_id;
+      ServiceCategory = service_category;
+      ServiceName     = service_name;
+      UnitPrice       = unit_price;
+      UnitOfMeaure    = unit_of_meaure;
+      Description     = description;
+      VendorId        = vendor_id;
+      ValidFrom       = valid_from;
+      ValidTo         = valid_to;
+      TaxCode         = tax_code;
+      Status          = status;
+      CurrencyCode    = currency_code;
+      CreatedBy       = created_by;
+      CreatedAt       = created_at;
+      LastChangedBy   = last_changed_by;
+      LastChangedAt   = last_changed_at;
+    }
+}

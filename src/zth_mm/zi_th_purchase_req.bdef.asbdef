@@ -1,0 +1,70 @@
+managed implementation in class zbp_i_th_purchase_req unique;
+strict ( 2 );
+
+define behavior for ZI_TH_PURCHASE_REQ alias PurchaseReq
+persistent table zth_purchase_req
+lock master
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly: update ) PrId;
+  field ( readonly ) LastChangedAt;
+  field ( mandatory ) EventId, RequestedBy, CurrencyCode;
+
+  action SubmitPR result [1] $self;
+  action ApprovePR result [1] $self;
+  action RejectPR result [1] $self;
+  action CreatePO result [1] $self;
+
+  validation ValidatePRitems on save { create; update; }
+  validation ValidateTotalAmount on save { create; update; }
+
+  determination SetInitialStatus on modify { create; }
+  determination CalculateTotalAmount on modify { create; update; }
+
+  association _item { create; }
+
+  mapping for zth_purchase_req {
+       EventId       = event_id;
+       PrId          = pr_id;
+       TotalAmount   = total_amount;
+       Status        = status;
+       CurrencyCode  = currency_code;
+       RequestDate   = request_date;
+       RequestedBy   = requested_by;
+       LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for ZI_TH_PUR_REQ_ITEM alias PurchaseReqItem
+persistent table zth_pur_req_item
+lock dependent by _PurchaseReq
+authorization dependent by _PurchaseReq
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) PrItemId;
+  field ( readonly ) prid, NetAmount;
+  field ( mandatory ) Quantity, ServiceId, UnitPrice, CurrencyCode;
+
+  validation ValidateQuantity on save { create; update; }
+
+  determination CalculateItemAmount on modify { create; update; }
+
+  association _PurchaseReq;
+
+  mapping for zth_pur_req_item {
+           PrId         = pr_id;
+           ServiceId    = service_id;
+           PrItemId     = pr_item_id;
+           Quantity     = quantity;
+           UnitPrice    = unit_price;
+           NetAmount    = net_amount;
+           CurrencyCode = currency_code;
+
+  }
+}

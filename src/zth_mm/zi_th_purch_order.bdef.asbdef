@@ -1,0 +1,46 @@
+managed implementation in class zbp_i_th_purch_order unique;
+strict ( 2 );
+
+define behavior for ZI_TH_PURCH_ORDER alias PurchOrder
+persistent table zth_purch_order
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) PoId;
+  field ( readonly ) EventId, PrId, ApprovedAt, ApprovedBy, VendorId;
+  field ( mandatory ) PoNumber, NetAmount, TaxAmount, TotalAmount;
+
+  action ReleasePO result [1] $self;
+  action ClosePO   result [1] $self;
+  action CancelPO  result [1] $self;
+
+  validation ValidateAmount on save { create; update; }
+  determination SetInitialStatus on modify { create; }
+
+ mapping for zth_purch_order {
+     EventId        = event_id;
+     PrId           = pr_id;
+     PoNumber       = po_number;
+     PoId           = po_id;
+     VendorId       = vendor_id;
+     TotalAmount    = total_amount;
+     TaxAmount      = tax_amount;
+     DeliveryDate   = delivery_date;
+     PoDate         = po_date;
+     NetAmount      = net_amount;
+     PaymentTerms   = payment_terms;
+     Status         = status;
+     CurrencyCode   = currency_code;
+     ApprovedBy     = approved_by;
+     ApprovedAt     = approved_at;
+     ApprovalStatus = approval_status;
+     CreatedBy      = created_by;
+     CreatedAt      = created_at;
+     LastChangedBy  = last_changed_by;
+     LastChangedAt  = last_changed_at;
+ }
+}

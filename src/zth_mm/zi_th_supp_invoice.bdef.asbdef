@@ -1,0 +1,29 @@
+managed implementation in class zbp_i_th_supp_invoice unique;
+strict ( 2 );
+
+define behavior for ZI_TH_SUPP_INVOICE alias SuppInvoice
+persistent table zth_supp_invoice
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) InvoiceId;
+  field ( mandatory ) PoId, Amount, InvoiceDate;
+
+  action PostInvoice result [1] $self;
+  action PayInvoice  result [1] $self;
+  action ReverseInvoice result [1] $self;
+
+  mapping for zth_supp_invoice {
+    VendorId     = vendor_id;
+    PoId         = po_id;
+    InvoiceId    = invoice_id;
+    Status       = status;
+    InvoiceDate  = invoice_date;
+    CurrencyCode = currency_code;
+    Amount       = amount;
+  }
+}
