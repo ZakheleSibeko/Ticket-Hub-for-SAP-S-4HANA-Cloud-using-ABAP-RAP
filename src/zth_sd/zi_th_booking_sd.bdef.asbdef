@@ -1,0 +1,67 @@
+managed implementation in class zbp_i_th_booking_sd unique;
+strict ( 2 );
+
+define behavior for ZI_TH_BOOKING_SD alias Booking
+persistent table zth_booking_sd
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) BookingId;
+  field ( readonly ) CreatedAt, LocalLastchangedAt;
+
+  action ConfirmBooking result [1] $self;
+  action CancelBooking result [1] $self;
+  action CompletePayment result [1] $self;
+
+  determination SetInitialStatus on modify { create; }
+
+  validation ValidateBooking on save { create; update; }
+
+  association _BookingItem { create; }
+
+  mapping for zth_booking_sd
+    {
+      EventId            = event_id;
+      CustomerId         = customer_id;
+      BookingId          = booking_id;
+      TotalAmount        = total_amount;
+      BookingDate        = booking_date;
+      Status             = status;
+      CurrencyCode       = currency_code;
+      CreatedAt          = created_at;
+      CreatedBy          = created_by;
+      LocalLastchangedAt = local_lastchanged_at;
+      LocalLastchangedBy = local_lastchanged_by;
+    }
+}
+
+define behavior for ZI_TH_BOOKING_ITSD alias BookingItem
+persistent table zth_booking_itsd
+lock dependent by __Booking
+authorization dependent by __Booking
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) BookingItemId;
+  field ( readonly ) BookingId;
+
+  determination CalculateNetAmount on modify { create; }
+
+  association __Booking;
+
+  mapping for zth_booking_itsd
+    {
+      UnitPrice     = unit_price;
+      TicketTypeId  = ticket_type_id;
+      Quantity      = quantity;
+      NetAmount     = net_amount;
+      CurrencyCode  = currency_code;
+      BookingItemId = booking_item_id;
+      BookingId     = booking_id;
+    }
+}

@@ -1,0 +1,5 @@
+CLASS zbp_i_th_booking_sd DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_booking_sd.
+ENDCLASS.
+
+CLASS zbp_i_th_booking_sd IMPLEMENTATION.
+ENDCLASS.
