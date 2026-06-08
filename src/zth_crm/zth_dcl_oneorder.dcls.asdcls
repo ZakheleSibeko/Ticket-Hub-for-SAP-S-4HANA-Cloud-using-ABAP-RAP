@@ -1,0 +1,7 @@
+@EndUserText.label: 'CRM Oneorder DCL'
+@MappingRole: true
+define role ZTH_DCL_ONEORDER {
+    grant select on ZI_TH_ONEORDER_HDR where
+                        ( CreatedBy ) = aspect pfcg_auth( ZTH_CRM_OO, ZUSER, ACTVT = '03' );
+                                       
+}

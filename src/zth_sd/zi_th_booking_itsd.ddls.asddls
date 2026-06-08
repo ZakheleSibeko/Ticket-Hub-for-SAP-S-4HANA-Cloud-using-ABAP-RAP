@@ -2,8 +2,9 @@
 @EndUserText.label: 'Booking item database table'
 @Metadata.ignorePropagatedAnnotations: true
 define view entity ZI_TH_BOOKING_ITSD as select from zth_booking_itsd
-association to parent ZI_TH_BOOKING_SD as __Booking
-    on $projection.BookingId = __Booking.BookingId
+association to parent ZI_TH_BOOKING_SD as _Booking
+    on $projection.BookingId = _Booking.BookingId
+
 {
     key booking_item_id as BookingItemId,
     booking_id as BookingId,
@@ -13,5 +14,5 @@ association to parent ZI_TH_BOOKING_SD as __Booking
     @Semantics.amount.currencyCode: 'CurrencyCode'
     net_amount as NetAmount,
     currency_code as CurrencyCode,
-    __Booking 
+    _Booking 
 }

@@ -1,0 +1,159 @@
+managed implementation in class zbp_i_th_oneorder_hdr unique;
+strict ( 2 );
+
+define behavior for ZI_TH_ONEORDER_HDR alias Header
+persistent table zth_oneorder_hdr
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  field ( readonly, numbering : managed ) Guid;
+
+  action ( features : instance) submit result [1] $self;
+
+  determination setInitialStatus on modify { create; }
+
+  validation checkmandatoryPartners on save { create; update; }
+
+  association _Appoitment { create; }
+  association _Item { create; }
+  association _Partner { create; }
+  association _Pricing { create; }
+  association _Status { create; }
+  association _Text { create; }
+
+  mapping for zth_oneorder_hdr {
+          Guid        = guid;
+          Description = description;
+          ProcessType = process_type;
+          Status      = status;
+          CreatedBy   = created_by;
+          CreatedAt   = created_at;
+  }
+}
+
+define behavior for ZI_TH_ONEORDER_APPT alias Appointment
+persistent table zth_oneorder_apt
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) ApptGuid;
+  field ( readonly ) HeaderGuid;
+  association _Header;
+
+  mapping for zth_oneorder_apt {
+      HeaderGuid = header_guid;
+      ApptType   = appt_type;
+      ApptGuid   = appt_guid;
+      StartDate  = start_date;
+      EndDate    = end_date;
+  }
+}
+
+define behavior for ZI_TH_ONEORDER_ITEM alias Item
+persistent table zth_oneorder_ite
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) ItemGuid;
+  field ( readonly ) HeaderGuid;
+  association _Header;
+
+  mapping for zth_oneorder_ite {
+      HeaderGuid  = header_guid;
+      ItemGuid    = item_guid;
+      ProductId   = product_id;
+      Quantity    = quantity;
+      ItemType    = item_type;
+  }
+}
+
+define behavior for ZI_TH_ONEORDER_PARTNER alias Partner
+persistent table zth_oneorder_par
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) PartnerGuid;
+  field ( readonly ) HeaderGuid;
+  association _Header;
+
+  mapping for zth_oneorder_par {
+          BpId = bp_id;
+          HeaderGuid = header_guid;
+          PartnerGuid = partner_guid;
+          PartnerFunction = partner_function;
+  }
+}
+
+define behavior for ZI_TH_ONEORDER_PRICING alias Pricing
+persistent table zth_oneorder_pri
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) PricingGuid;
+  field ( readonly ) HeaderId;
+  association _Header;
+
+  mapping for zth_oneorder_pri {
+      HeaderId = header_id;
+      Value    = value;
+      PricingGuid = pricing_guid;
+      ConditionType = condition_type;
+  }
+}
+
+define behavior for ZI_TH_ONEORDER_STATUS alias Status
+persistent table zth_oneorder_sta
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) StatusGuid;
+  field ( readonly ) HeaderGuid;
+  association _Header;
+
+  mapping for zth_oneorder_sta {
+       HeaderGuid  = header_guid;
+       StatusGuid  = status_guid;
+       Active      = active;
+       Status      = status;
+  }
+}
+
+define behavior for ZI_TH_ONEORDER_TEXT alias Text
+persistent table zth_oneorder_txt
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) TextGuid;
+  field ( readonly ) HeaderGuid;
+  association _Header;
+
+  mapping for zth_oneorder_txt {
+          HeaderGuid = header_guid;
+          TextGuid   = text_guid;
+          TextType   = text_type;
+          TextLine   = text_line;
+  }
+}

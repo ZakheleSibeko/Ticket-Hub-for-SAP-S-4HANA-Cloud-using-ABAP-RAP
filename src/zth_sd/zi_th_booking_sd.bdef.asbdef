@@ -1,27 +1,40 @@
 managed implementation in class zbp_i_th_booking_sd unique;
 strict ( 2 );
 
+with draft;
+
 define behavior for ZI_TH_BOOKING_SD alias Booking
 persistent table zth_booking_sd
-lock master
+draft table zth_booking_sd_d
+lock master total etag LocalLastchangedAt
 authorization master ( instance )
 //etag master <field_name>
 {
   create ( authorization : global );
   update;
   delete;
+
   field ( readonly, numbering : managed ) BookingId;
+  field ( mandatory ) EventId, CustomerId, BookingDate, TotalAmount, Status;
   field ( readonly ) CreatedAt, LocalLastchangedAt;
 
   action ConfirmBooking result [1] $self;
   action CancelBooking result [1] $self;
   action CompletePayment result [1] $self;
 
+  draft action Activate optimized;
+  draft action Resume;
+  draft action Edit;
+  draft action Discard;
+  draft determine action Prepare {
+   validation ValidateBooking;
+  }
+
   determination SetInitialStatus on modify { create; }
 
   validation ValidateBooking on save { create; update; }
 
-  association _BookingItem { create; }
+  association _BookingItem { create; with draft; }
 
   mapping for zth_booking_sd
     {
@@ -41,18 +54,20 @@ authorization master ( instance )
 
 define behavior for ZI_TH_BOOKING_ITSD alias BookingItem
 persistent table zth_booking_itsd
-lock dependent by __Booking
-authorization dependent by __Booking
+draft table zth_booking_itdr
+lock dependent by _Booking
+authorization dependent by _Booking
 //etag master <field_name>
 {
   update;
   delete;
+
   field ( readonly, numbering : managed ) BookingItemId;
   field ( readonly ) BookingId;
 
   determination CalculateNetAmount on modify { create; }
 
-  association __Booking;
+  association _Booking{ with draft; }
 
   mapping for zth_booking_itsd
     {

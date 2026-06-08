@@ -13,5 +13,5 @@ define view entity ZC_TH_BOOKING_ITSD
     NetAmount,
     CurrencyCode,
     /* Associations */
-    __Booking
+    _Booking : redirected to parent ZC_TH_BOOKING_SD
 }

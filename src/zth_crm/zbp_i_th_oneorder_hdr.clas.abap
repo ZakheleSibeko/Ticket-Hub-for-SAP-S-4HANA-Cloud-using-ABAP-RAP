@@ -1,0 +1,5 @@
+CLASS zbp_i_th_oneorder_hdr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_oneorder_hdr.
+ENDCLASS.
+
+CLASS zbp_i_th_oneorder_hdr IMPLEMENTATION.
+ENDCLASS.
