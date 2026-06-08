@@ -1,15 +1,26 @@
 managed implementation in class zbp_i_th_oneorder_hdr unique;
 strict ( 2 );
 
+with draft;
+
 define behavior for ZI_TH_ONEORDER_HDR alias Header
 persistent table zth_oneorder_hdr
-lock master
+draft table zth_oneorderhdrd
+lock master total etag CreatedAt
 authorization master ( instance )
 //etag master <field_name>
 {
   create ( authorization : global );
   update;
   delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Resume;
+  draft action Discard;
+  draft determine action Prepare {
+   validation checkmandatoryPartners;
+  }
 
   field ( readonly, numbering : managed ) Guid;
 
@@ -19,12 +30,12 @@ authorization master ( instance )
 
   validation checkmandatoryPartners on save { create; update; }
 
-  association _Appoitment { create; }
-  association _Item { create; }
-  association _Partner { create; }
-  association _Pricing { create; }
-  association _Status { create; }
-  association _Text { create; }
+  association _Appoitment { create; with draft; }
+  association _Item { create; with draft;}
+  association _Partner { create; with draft;}
+  association _Pricing { create; with draft;}
+  association _Status { create; with draft;}
+  association _Text { create; with draft;}
 
   mapping for zth_oneorder_hdr {
           Guid        = guid;
@@ -38,6 +49,7 @@ authorization master ( instance )
 
 define behavior for ZI_TH_ONEORDER_APPT alias Appointment
 persistent table zth_oneorder_apt
+draft table zth_oneorderaptd
 lock dependent by _Header
 authorization dependent by _Header
 //etag master <field_name>
@@ -46,7 +58,7 @@ authorization dependent by _Header
   delete;
   field ( readonly, numbering : managed ) ApptGuid;
   field ( readonly ) HeaderGuid;
-  association _Header;
+  association _Header { with draft; }
 
   mapping for zth_oneorder_apt {
       HeaderGuid = header_guid;
@@ -59,6 +71,7 @@ authorization dependent by _Header
 
 define behavior for ZI_TH_ONEORDER_ITEM alias Item
 persistent table zth_oneorder_ite
+draft table zth_oneorderited
 lock dependent by _Header
 authorization dependent by _Header
 //etag master <field_name>
@@ -67,7 +80,7 @@ authorization dependent by _Header
   delete;
   field ( readonly, numbering : managed ) ItemGuid;
   field ( readonly ) HeaderGuid;
-  association _Header;
+  association _Header { with draft; }
 
   mapping for zth_oneorder_ite {
       HeaderGuid  = header_guid;
@@ -80,6 +93,7 @@ authorization dependent by _Header
 
 define behavior for ZI_TH_ONEORDER_PARTNER alias Partner
 persistent table zth_oneorder_par
+draft table zth_oneorderpard
 lock dependent by _Header
 authorization dependent by _Header
 //etag master <field_name>
@@ -88,7 +102,7 @@ authorization dependent by _Header
   delete;
   field ( readonly, numbering : managed ) PartnerGuid;
   field ( readonly ) HeaderGuid;
-  association _Header;
+  association _Header { with draft; }
 
   mapping for zth_oneorder_par {
           BpId = bp_id;
@@ -100,6 +114,7 @@ authorization dependent by _Header
 
 define behavior for ZI_TH_ONEORDER_PRICING alias Pricing
 persistent table zth_oneorder_pri
+draft table zth_oneorderprid
 lock dependent by _Header
 authorization dependent by _Header
 //etag master <field_name>
@@ -108,7 +123,7 @@ authorization dependent by _Header
   delete;
   field ( readonly, numbering : managed ) PricingGuid;
   field ( readonly ) HeaderId;
-  association _Header;
+  association _Header { with draft; }
 
   mapping for zth_oneorder_pri {
       HeaderId = header_id;
@@ -120,6 +135,7 @@ authorization dependent by _Header
 
 define behavior for ZI_TH_ONEORDER_STATUS alias Status
 persistent table zth_oneorder_sta
+draft table zth_oneorderstad
 lock dependent by _Header
 authorization dependent by _Header
 //etag master <field_name>
@@ -128,7 +144,7 @@ authorization dependent by _Header
   delete;
   field ( readonly, numbering : managed ) StatusGuid;
   field ( readonly ) HeaderGuid;
-  association _Header;
+  association _Header { with draft; }
 
   mapping for zth_oneorder_sta {
        HeaderGuid  = header_guid;
@@ -140,6 +156,7 @@ authorization dependent by _Header
 
 define behavior for ZI_TH_ONEORDER_TEXT alias Text
 persistent table zth_oneorder_txt
+draft table zth_oneordertxtd
 lock dependent by _Header
 authorization dependent by _Header
 //etag master <field_name>
@@ -148,7 +165,7 @@ authorization dependent by _Header
   delete;
   field ( readonly, numbering : managed ) TextGuid;
   field ( readonly ) HeaderGuid;
-  association _Header;
+  association _Header { with draft; }
 
   mapping for zth_oneorder_txt {
           HeaderGuid = header_guid;
