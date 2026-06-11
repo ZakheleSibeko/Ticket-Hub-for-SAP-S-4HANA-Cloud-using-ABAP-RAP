@@ -1,0 +1,5 @@
+CLASS zbp_i_th_wf_header DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_wf_header.
+ENDCLASS.
+
+CLASS zbp_i_th_wf_header IMPLEMENTATION.
+ENDCLASS.

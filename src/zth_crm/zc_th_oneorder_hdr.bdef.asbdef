@@ -1,0 +1,19 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_TH_ONEORDER_HDR alias Header
+{
+  use create;
+  use update;
+  use delete;
+
+  use action submit;
+
+  use action Edit;
+  use action Activate;
+  use action Resume;
+  use action Discard;
+  use action Prepare;
+
+}

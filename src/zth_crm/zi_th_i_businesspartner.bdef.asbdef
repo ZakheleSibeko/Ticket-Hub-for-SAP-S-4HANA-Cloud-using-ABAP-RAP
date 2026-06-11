@@ -1,0 +1,45 @@
+managed implementation in class zbp_i_th_i_businesspartner unique;
+strict ( 2 );
+
+with draft;
+define behavior for ZI_TH_I_BusinessPartner alias BusinessPartner
+persistent table zth_bp
+draft table zth_bp_d
+lock master total etag LocalLastChangedAt
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) BpId;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy, LocalLastChangedAt;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Resume;
+  draft action Discard;
+  draft determine action Prepare {
+   validation validateEmail;
+  }
+
+  determination setCreatedAndChanged on modify { create; }
+
+  validation validateEmail on save { field Email; }
+
+  mapping for zth_bp
+    {
+      BpId               = bp_id;
+      BpType             = bp_type;
+      FirstName          = first_name;
+      LastName           = last_name;
+      Email              = email;
+      Phone              = phone;
+      Status             = status;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}

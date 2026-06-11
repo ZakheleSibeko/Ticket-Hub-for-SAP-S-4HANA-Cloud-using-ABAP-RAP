@@ -1,0 +1,79 @@
+managed implementation in class zbp_i_th_wf_header unique;
+strict ( 2 );
+
+define behavior for ZI_TH_WF_HEADER alias Header
+persistent table zth_wf_header
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) WfId;
+
+  association _Log { create; }
+  association _Step { create; }
+
+  action Submit result [1] $self;
+  action Approve result [1] $self;
+  action Reject result [1] $self;
+
+  mapping for zth_wf_header {
+      WfId = wf_id;
+      ObjectId = object_id;
+      ObjectType = object_type;
+      Status     = status;
+      StartedBy  = started_by;
+      StartedAt  = started_at;
+      CompletedAt = completed_at;
+      LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for ZI_TH_WF_LOG alias Log
+persistent table zth_wf_log
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) LogId;
+  field ( readonly ) WfId;
+  association _Header;
+
+  mapping for zth_wf_log {
+      WfId = wf_id;
+      UserId = user_id;
+      LogId = log_id;
+      Comments = comments;
+      Action = action;
+      ActionDate = action_date;
+  }
+}
+
+define behavior for ZI_TH_WF_STEP alias Step
+persistent table zth_wf_step
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) StepId;
+  field ( readonly ) WfId;
+  association _Header;
+
+  mapping for zth_wf_step {
+
+      WfId = wf_id;
+      StepNo = step_no;
+      StepId = step_id;
+      ApproverId = approver_id;
+      Status     = status;
+      Comments   = comments;
+      DesicionDate = desicion_date;
+
+  }
+}

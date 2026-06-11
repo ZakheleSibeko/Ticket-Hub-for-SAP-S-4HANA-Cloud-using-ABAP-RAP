@@ -1,6 +1,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Oppurtunity CDS projection view'
 @Metadata.ignorePropagatedAnnotations: true
+@Metadata.allowExtensions: true
 define root view entity ZC_TH_OPPORTUNITY
  provider contract transactional_query 
  as projection on ZI_TH_OPPORTUNITY

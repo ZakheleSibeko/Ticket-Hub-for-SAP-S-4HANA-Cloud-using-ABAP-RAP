@@ -1,0 +1,59 @@
+@Metadata.layer: #CORE
+@UI: { 
+     headerInfo: {
+         typeName: 'Opportunity',
+         typeNamePlural: 'Opportunities',
+         title: { 
+              type: #STANDARD,
+              value: 'OpportunityId'
+         },
+         description: { 
+             type: #STANDARD,
+             value: 'BpId'
+         } 
+     } 
+   }
+annotate entity ZC_TH_OPPORTUNITY with 
+{ 
+   @UI.facet: [ { 
+                id: 'Opportunity',
+                purpose: #STANDARD,
+                type: #IDENTIFICATION_REFERENCE,
+                label: 'Opportuunity',
+                position: 10
+   } ] 
+   @UI.lineItem: [ { position: 10, importance: #HIGH, label: 'Opportunity Id' } ]
+   @UI.identification: [ { position: 10 } ]
+   @UI.selectionField: [ { position: 10 } ]
+   OpportunityId; 
+   
+   @UI.lineItem: [ { position: 20, importance: #HIGH, label: 'Business partner Id'} ]
+   @UI.identification: [ { position: 20 } ]
+   @UI.selectionField: [ { position: 20 } ]
+   BpId;
+   
+   @UI.lineItem: [ { position: 30, importance: #HIGH, label: 'Event Id'} ]
+   @UI.identification: [ { position: 30 } ]
+   @UI.selectionField: [ { position: 30 } ]
+   EventId;
+   
+   @UI.lineItem: [ { position: 40, importance: #HIGH, label: 'Expected revenue'} ]
+   @UI.identification: [ { position: 40 } ]
+   @UI.selectionField: [ { position: 40 } ]
+   ExpectedRevenue;
+   
+   @UI.lineItem: [ { position: 50, importance: #HIGH, label: 'Stage'} ]
+   @UI.identification: [ { position: 50 } ]
+   @UI.selectionField: [ { position: 50 } ]
+   Stage;
+   
+   @UI.lineItem: [ { position: 60, importance: #HIGH, label: 'Status'} ]
+   @UI.identification: [ { position: 60 } ]
+   @UI.selectionField: [ { position: 60 } ]
+   Status;
+   
+   @UI.lineItem: [ { position: 70, importance: #HIGH, label: 'Currency code'} ]
+   @UI.identification: [ { position: 70 } ]
+   @UI.selectionField: [ { position: 70 } ]
+   CurrencyCode;
+}

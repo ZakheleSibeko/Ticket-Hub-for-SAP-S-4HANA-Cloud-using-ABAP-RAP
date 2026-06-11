@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service definition'
+define service ZUI_TH_CRM {
+  expose ZC_TH_I_BUSINESSPARTNER as BusinessPartner;
+  expose ZC_TH_ONEORDER_HDR      as Header;
+  expose ZC_TH_OPPORTUNITY       as Opportunity;
+}

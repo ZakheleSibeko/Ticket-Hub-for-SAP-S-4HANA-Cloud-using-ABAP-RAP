@@ -58,16 +58,7 @@ CLASS lhc_ZI_TH_ONEORDER_HDR IMPLEMENTATION.
                     WITH VALUE #(
                                 ( %tky = header-%tky
                                   Status = 'OPEN' )
-                                  )
-                  CREATE BY \_Status
-                  FIELDS ( Status Active )
-                  WITH VALUE #( (
-                                 %tky = header-%tky
-                                 %target =  VALUE #(
-                                                    ( Status = 'OPEN'
-                                                     Active = 'X'
-                                                     %cid   = 'INITIALSTATUS' ) ) ) ) REPORTED DATA(lt_reported).
-          reported = CORRESPONDING #( DEEP lt_reported ).
+                                  ).
       ENDLOOP.
   ENDMETHOD.
 

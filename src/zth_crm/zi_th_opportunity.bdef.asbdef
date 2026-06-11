@@ -1,0 +1,25 @@
+managed implementation in class zbp_i_th_opportunity unique;
+strict ( 2 );
+
+define behavior for ZI_TH_OPPORTUNITY //alias <alias_name>
+persistent table zth_opportunity
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) OpportunityId;
+
+  mapping for zth_opportunity
+    {
+      BpId            = bp_id;
+      EventId         = event_id;
+      OpportunityId   = opportunity_id;
+      ExpectedRevenue = expected_revenue;
+      Stage           = stage;
+      Status          = status;
+      CurrencyCode    = currency_code;
+    }
+}

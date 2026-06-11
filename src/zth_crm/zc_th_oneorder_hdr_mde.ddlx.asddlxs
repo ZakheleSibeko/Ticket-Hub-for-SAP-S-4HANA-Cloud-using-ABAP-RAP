@@ -1,0 +1,53 @@
+@Metadata.layer: #CORE
+@UI: { 
+     headerInfo: { 
+       typeName: 'Header',
+       typeNamePlural: 'Headers',
+       title: { 
+               type: #STANDARD,
+               value: 'Guid'
+                },
+       description: { 
+                 type: #STANDARD,
+                 value: 'Status'
+                 }         
+     }
+}
+annotate view ZC_TH_ONEORDER_HDR with 
+{
+@UI.facet: [
+     {
+       id: 'HeaderInformation',
+       purpose: #STANDARD,
+       type: #IDENTIFICATION_REFERENCE,
+       label: 'Header',
+       position: 10 
+     }
+  ]
+
+  @UI.lineItem: [{ position: 10, importance: #HIGH, label: 'BookingGuid' }]
+  @UI.identification: [{ position: 10 }]
+  @UI.selectionField: [{ position: 10 }]
+  Guid;
+  
+  @UI.lineItem: [{ position: 20, importance: #HIGH, label: 'Description'}]
+  @UI.identification: [ { position: 20 } ]
+  @UI.selectionField: [ { position: 30 } ]  
+  Description;
+  
+  @UI.lineItem: [{ position: 30, importance: #HIGH, label: 'ProcessType'}]
+  @UI.identification: [{ position: 30 }]
+  @UI.selectionField: [{ position: 30 }]
+  ProcessType;
+  
+  @UI.lineItem: [{ position: 40, importance: #HIGH, label: 'Status'}]
+  @UI.identification: [{ position: 40 }]
+  @UI.selectionField: [{ position: 40 }] 
+  Status;
+  
+  @UI.hidden: true
+  CreatedBy; 
+  
+  @UI.hidden: true
+  CreatedAt; 
+}

@@ -1,0 +1,5 @@
+CLASS zbp_i_th_opportunity DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_th_opportunity.
+ENDCLASS.
+
+CLASS zbp_i_th_opportunity IMPLEMENTATION.
+ENDCLASS.

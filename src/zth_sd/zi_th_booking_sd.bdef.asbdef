@@ -14,14 +14,6 @@ authorization master ( instance )
   update;
   delete;
 
-  field ( readonly, numbering : managed ) BookingId;
-  field ( mandatory ) EventId, CustomerId, BookingDate, TotalAmount, Status;
-  field ( readonly ) CreatedAt, LocalLastchangedAt;
-
-  action ConfirmBooking result [1] $self;
-  action CancelBooking result [1] $self;
-  action CompletePayment result [1] $self;
-
   draft action Activate optimized;
   draft action Resume;
   draft action Edit;
@@ -29,6 +21,14 @@ authorization master ( instance )
   draft determine action Prepare {
    validation ValidateBooking;
   }
+
+  field ( readonly, numbering : managed ) BookingId;
+  field ( mandatory ) EventId, CustomerId, BookingDate, TotalAmount, Status;
+  field ( readonly ) CreatedAt, LocalLastchangedAt;
+
+  action ConfirmBooking result [1] $self;
+  action CancelBooking result [1] $self;
+  action CompletePayment result [1] $self;
 
   determination SetInitialStatus on modify { create; }
 

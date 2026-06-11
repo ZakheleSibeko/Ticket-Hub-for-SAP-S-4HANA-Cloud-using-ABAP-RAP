@@ -30,7 +30,7 @@ authorization master ( instance )
 
   validation checkmandatoryPartners on save { create; update; }
 
-  association _Appoitment { create; with draft; }
+  association _Appointment { create; with draft; }
   association _Item { create; with draft;}
   association _Partner { create; with draft;}
   association _Pricing { create; with draft;}
@@ -58,6 +58,7 @@ authorization dependent by _Header
   delete;
   field ( readonly, numbering : managed ) ApptGuid;
   field ( readonly ) HeaderGuid;
+
   association _Header { with draft; }
 
   mapping for zth_oneorder_apt {
