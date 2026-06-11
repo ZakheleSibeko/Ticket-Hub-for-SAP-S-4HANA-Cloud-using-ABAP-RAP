@@ -1,0 +1,75 @@
+managed implementation in class zbp_i_th_partner unique;
+strict ( 2 );
+
+define behavior for ZI_TH_PARTNER alias Partner
+persistent table zth_partner
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) PartnerId;
+
+  action Activated result [1] $self;
+  action Deactivated result [1] $self;
+
+  association _API_LOG { create; }
+  association _Messaging { create; }
+
+  mapping for zth_partner {
+       PartnerId = partner_id;
+       PartnerName = partner_name;
+       PartnerType = partner_type;
+       EndpointUrl = endpoint_url;
+       ApiKey      = api_key;
+       Status      = status;
+  }
+}
+
+define behavior for ZI_TH_API_LOG alias API_LOG
+persistent table zth_api_log
+lock dependent by _Partner
+authorization dependent by _Partner
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) LogId;
+  field ( readonly ) PartnerId;
+  association _Partner;
+
+  mapping for zth_api_log {
+    LogId = log_id;
+    PartnerId = partner_id;
+    Direction = direction;
+    RequestPayload = request_payload;
+    ResponsePayload = response_payload;
+    MessageType     = message_type;
+    Status          = status;
+    CreatedAt       = created_at;
+  }
+}
+
+define behavior for ZI_TH_PARTNER_MSG alias Messaging
+persistent table zth_partner_msg
+lock dependent by _Partner
+authorization dependent by _Partner
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly, numbering : managed ) MessageId;
+  field ( readonly ) PartnerId;
+  association _Partner;
+
+  mapping for zth_partner_msg {
+    PartnerId = partner_id;
+    ObjectId  = object_id;
+    MessageId = message_id;
+    ObjectType = object_type;
+    Payload    = payload;
+    Status     = status;
+  }
+}
