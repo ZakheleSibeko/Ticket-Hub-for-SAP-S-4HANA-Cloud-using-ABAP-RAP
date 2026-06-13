@@ -45,7 +45,7 @@ annotate view ZC_TH_EVENT with
   EventId;
 
   @UI.lineItem: [
-    { position: 10, importance: #HIGH }
+    { position: 10, importance: #HIGH, label: 'Event Name' }
   ]
   @UI.identification: [
     { position: 10 }
@@ -56,7 +56,7 @@ annotate view ZC_TH_EVENT with
   EventName;
 
   @UI.lineItem: [
-    { position: 20, importance: #HIGH }
+    { position: 20, importance: #HIGH, label: 'Event type' }
   ]
   @UI.identification: [
     { position: 20 }
@@ -67,42 +67,44 @@ annotate view ZC_TH_EVENT with
   EventType;
 
   @UI.lineItem: [
-    { position: 30, importance: #HIGH }
+    { position: 30, importance: #HIGH, label: 'Venue' }
   ]
   @UI.identification: [
     { position: 30 }
   ]
+  @UI.selectionField: [ { position: 30 } ]
   Venue;
 
   @UI.lineItem: [
-    { position: 40, importance: #MEDIUM }
+    { position: 40, importance: #MEDIUM, label: 'City' }
   ]
+  @UI.selectionField: [ { position: 40 } ]
   @UI.identification: [
     { position: 40 }
   ]
   City;
 
   @UI.lineItem: [
-    { position: 50, importance: #MEDIUM }
+    { position: 50, importance: #MEDIUM, label: 'Event details' }
   ]
   @UI.identification: [
     { position: 50 }
   ]
-  countrycode;
+  EventDetails;
 
   @UI.lineItem: [
-    { position: 60, importance: #HIGH }
+    { position: 60, importance: #HIGH, label: 'Start date' }
   ]
   @UI.identification: [
     { position: 60 }
   ]
   @UI.selectionField: [
-    { position: 30 }
+    { position: 60 }
   ]
   StartDate;
 
   @UI.lineItem: [
-    { position: 70, importance: #MEDIUM }
+    { position: 70, importance: #MEDIUM, label: 'End date' }
   ]
   @UI.identification: [
     { position: 70 }
@@ -110,18 +112,15 @@ annotate view ZC_TH_EVENT with
   EndDate;
 
   @UI.lineItem: [
-    { position: 80, importance: #HIGH }
+    { position: 170, importance: #HIGH, label: 'Status' }
   ]
   @UI.identification: [
-    { position: 80 }
-  ]
-  @UI.selectionField: [
-    { position: 40 }
+    { position: 170 }
   ]
   Status;
 
   @UI.lineItem: [
-    { position: 90, importance: #MEDIUM }
+    { position: 90, importance: #MEDIUM, label: 'Total capacity' }
   ]
   @UI.identification: [
     { position: 90 }
@@ -129,38 +128,44 @@ annotate view ZC_TH_EVENT with
   TotalCapacity;
 
   @UI.lineItem: [
-    { position: 100, importance: #MEDIUM }
+    { position: 100, importance: #MEDIUM, label: 'Available capacity' }
   ]
   @UI.identification: [
     { position: 100 }
   ]
   AvailableCapacity;
 
+  @UI.lineItem: [ { position: 110, importance: #MEDIUM, label: 'Currency code' } ]
   @UI.identification: [
     { position: 110 }
   ]
   CurrencyCode;
 
+  @UI.lineItem: [ { position: 120, importance: #MEDIUM, label: 'Organizer Id' } ]
   @UI.identification: [
     { position: 120 }
   ]
   OrganizerId;
 
+  @UI.lineItem: [ { position: 130, importance: #MEDIUM, label: 'Created by'} ]
   @UI.identification: [
     { position: 130 }
   ]
   CreatedBy;
 
+  @UI.lineItem: [ { position: 140, importance: #MEDIUM, label: 'Created at'} ]
   @UI.identification: [
     { position: 140 }
   ]
   CreatedAt;
 
+  @UI.lineItem: [ { position: 150, importance: #MEDIUM, label: 'Last changed by'} ]
   @UI.identification: [
     { position: 150 }
   ]
   LastChangedBy;
 
+  @UI.lineItem: [ { position: 160, importance: #MEDIUM, label: 'Last changed at'} ]
   @UI.identification: [
     { position: 160 }
   ]

@@ -36,6 +36,11 @@ CLASS lhc_Event DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS ValidateEventText FOR VALIDATE ON SAVE
       IMPORTING keys FOR Event~ValidateEventText.
+    METHODS SetInitialCurrency FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR Event~SetInitialCurrency.
+*    METHODS SetAdminFields FOR DETERMINE ON MODIFY
+*      IMPORTING keys FOR Event~SetAdminFields.
+
 
 ENDCLASS.
 
@@ -456,6 +461,53 @@ CLASS lhc_Event IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+  METHOD SetInitialCurrency.
+    READ ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
+              ENTITY Event
+              FIELDS ( CurrencyCode )
+              WITH CORRESPONDING #( keys )
+              RESULT DATA(details).
+
+    LOOP AT details INTO DATA(detail).
+       MODIFY ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
+                   ENTITY Event
+                   UPDATE FIELDS ( CurrencyCode )
+                   WITH VALUE #( FOR key IN details
+                                (
+                                 %tky = key-%tky
+                                 CurrencyCode = 'ZAR'
+                                )
+                               ).
+    ENDLOOP.
+  ENDMETHOD.
+
+*  METHOD SetAdminFields.
+*      READ ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
+*                 ENTITY Event
+*                 FIELDS ( CreatedAt CreatedBy LastChangedAt LastChangedBy LocalLastChangedAt )
+*                 WITH CORRESPONDING #( keys )
+*                 RESULT DATA(details).
+*
+*      LOOP AT details INTO DATA(detail).
+*        DATA(user) = cl_abap_context_info=>get_user_alias(  ).
+*        DATA(time) = cl_abap_context_info=>get_system_time(  ).
+*        MODIFY ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
+*                     ENTITY Event
+*                     UPDATE FIELDS ( CreatedAt CreatedBy LastChangedAt LastChangedBy LocalLastChangedAt )
+*                     WITH VALUE #( FOR key IN details
+*                                 (
+*                                  %tky = key-%tky
+*                                  CreatedAt = time
+*                                  CreatedBy = user
+*                                  LastChangedAt = time
+*                                  LastChangedBy = user
+*                                  LocalLastChangedAt = time
+*                                 )
+*                               ).
+*       ENDLOOP.
+*   ENDMETHOD.
+
 ENDCLASS.
 
 CLASS lhc_booking DEFINITION INHERITING FROM cl_abap_behavior_handler.
@@ -477,8 +529,8 @@ CLASS lhc_booking DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS IssueTicket FOR MODIFY
       IMPORTING keys FOR ACTION Booking~IssueTicket RESULT result.
 
-    METHODS calculateBookingTotals FOR DETERMINE ON MODIFY
-      IMPORTING keys FOR Booking~calculateBookingTotals.
+*    METHODS calculateBookingTotals FOR DETERMINE ON MODIFY
+*      IMPORTING keys FOR Booking~calculateBookingTotals.
 
     METHODS SetInitialBookingValues FOR DETERMINE ON MODIFY
       IMPORTING keys FOR Booking~SetInitialBookingValues.
@@ -494,7 +546,7 @@ CLASS lhc_booking IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD CancelBooking.
-        READ ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
+      READ ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
       ENTITY Booking
       FIELDS ( BookingId Status )
       WITH CORRESPONDING #( keys )
@@ -752,44 +804,48 @@ CLASS lhc_booking IMPLEMENTATION.
     ).
   ENDMETHOD.
 
-  METHOD calculateBookingTotals.
-         READ ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
-      ENTITY Booking
-      FIELDS ( BookingId )
-      WITH CORRESPONDING #( keys )
-      RESULT DATA(bookings).
-
-    LOOP AT bookings ASSIGNING FIELD-SYMBOL(<booking>).
-
-      SELECT SUM( gross_amount )    AS gross_amount,
-             SUM( discount_amount ) AS discount_amount,
-             SUM( net_amount )      AS item_net_amount
-        FROM zth_booking_item
-        WHERE booking_id = @<booking>-BookingId
-        INTO @DATA(total).
-
-      DATA(gross_amount)    = CONV decfloat34( total-gross_amount ).
-      DATA(discount_amount) = CONV decfloat34( total-discount_amount ).
-      DATA(item_net_amount) = CONV decfloat34( total-item_net_amount ).
-
-      DATA(tax_amount) = item_net_amount * '0.15'.
-      DATA(net_amount) = item_net_amount + tax_amount.
-
-      MODIFY ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
-        ENTITY Booking
-        UPDATE FIELDS ( GrossAmount DiscountAmount TaxAmount NetAmount )
-        WITH VALUE #(
-          (
-            %tky           = <booking>-%tky
-            GrossAmount    = gross_amount
-            DiscountAmount = discount_amount
-            TaxAmount      = tax_amount
-            NetAmount      = net_amount
-          )
-        ).
-
-    ENDLOOP.
-  ENDMETHOD.
+*  METHOD calculateBookingTotals.
+*
+*     READ ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
+*      ENTITY Booking
+*      FIELDS ( BookingId )
+*      WITH CORRESPONDING #( keys )
+*      RESULT DATA(bookings).
+*
+*    LOOP AT bookings ASSIGNING FIELD-SYMBOL(<booking>).
+*
+*      SELECT SUM( gross_amount )    AS gross_amount,
+*             SUM( discount_amount ) AS discount_amount,
+*             SUM( net_amount )      AS item_net_amount
+*        FROM zth_booking_item
+*        WHERE booking_id = @<booking>-BookingId
+*        INTO @DATA(total).
+*
+*
+*       ENDIF.
+*    ENDLOOP.
+*
+*      DATA(gross_amount)    = CONV decfloat34( total-gross_amount ).
+*      DATA(discount_amount) = CONV decfloat34( total-discount_amount ).
+*      DATA(item_net_amount) = CONV decfloat34( total-item_net_amount ).
+*
+*      DATA(tax_amount) = item_net_amount * '0.15'.
+*      DATA(net_amount) = item_net_amount + tax_amount.
+*
+*      MODIFY ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
+*        ENTITY Booking
+*        UPDATE FIELDS ( GrossAmount DiscountAmount TaxAmount NetAmount )
+*        WITH VALUE #(
+*          (
+*            %tky           = <booking>-%tky
+*            GrossAmount    = gross_amount
+*            DiscountAmount = discount_amount
+*            TaxAmount      = tax_amount
+*            NetAmount      = net_amount
+*          )
+*        ).
+*
+*  ENDMETHOD.
 
   METHOD SetInitialBookingValues.
         READ ENTITIES OF ZI_TH_EVENT IN LOCAL MODE
@@ -842,6 +898,7 @@ CLASS lhc_booking IMPLEMENTATION.
 
     ENDLOOP.
   ENDMETHOD.
+...
 
 ENDCLASS.
 

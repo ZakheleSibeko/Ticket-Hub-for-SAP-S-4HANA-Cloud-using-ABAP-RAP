@@ -30,8 +30,8 @@ etag master LocalLastChangedAt
   }
 
   field ( readonly, numbering : managed ) EventId;
-  field (readonly : update ) Status, AvailableCapacity;
-  field ( mandatory ) EventName, Venue, StartDate, EndDate, TotalCapacity;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy, LocalLastChangedAt, OrganizerId, Status;
+
 
   action SubmitForApproval result [1] $self;
   action ApproveEvent      result [1] $self;
@@ -45,6 +45,8 @@ etag master LocalLastChangedAt
   validation ValidateEventReadiness on save { create; update; }
 
   determination SetInitialEventValues on modify { create; }
+  determination SetInitialCurrency    on modify { create; }
+//  determination SetAdminFields        on modify { create; }
 
   association _Booking { create; with draft; }
   association _Ticket_type { create; with draft; }
@@ -84,7 +86,7 @@ authorization dependent by _Event
 
 
   field ( readonly, numbering : managed ) BookingId;
-  field ( readonly : update ) EventId, GrossAmount, DiscountAmount, TaxAmount, NetAmount;
+ field ( readonly ) EventId, CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
 
   action ConfirmBooking  result [1] $self;
   action GenerateInvoice result [1] $self;
@@ -94,7 +96,7 @@ authorization dependent by _Event
   validation ValidateBookingCanIssues on save { create; update; }
 
   determination SetInitialBookingValues on modify { create; }
-  determination calculateBookingTotals  on modify { create; update; }
+//  determination calculateBookingTotals  on modify { create; update; }
 
   association _Event { with draft; }
 //  association _Booking_Item { create; with draft; }
@@ -129,7 +131,7 @@ authorization dependent by _Event
   delete;
 
   field ( readonly, numbering : managed ) BookingItemId;
-  field ( readonly : update ) BookingId, EventId, GrossAmount, NetAmount;
+  field ( readonly ) BookingId, EventId, GrossAmount, NetAmount;
   field ( mandatory ) TicketTypeId, Quantity, UnitPrice;
 
   determination CalculateItemAmount on modify { create; update; }
@@ -168,8 +170,7 @@ authorization dependent by _Event
   update;
   delete;
 
-  field ( readonly ) TicketTypeId;
-  field ( readonly : update ) EventId;
+  field ( readonly ) TicketTypeId, EventId;
 
   association _Event { with draft; }
 

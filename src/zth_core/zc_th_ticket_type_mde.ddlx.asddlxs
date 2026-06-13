@@ -1,0 +1,80 @@
+@Metadata.layer: #CORE
+@UI: { 
+     headerInfo: { 
+         typeName: 'Ticket type',
+         typeNamePlural: 'Ticket types',
+                 title: { 
+                     type: #STANDARD,
+                     value: 'TicketTypeId'
+                        },
+                  description: { 
+                       type: #STANDARD,
+                       value: 'TicketTypeName'
+     } 
+   }       
+}
+annotate view ZC_TH_TICKET_TYPE
+    with 
+{
+@UI.facet: [
+             { 
+             id: 'TicketType',
+             purpose: #STANDARD,
+             type: #IDENTIFICATION_REFERENCE,
+             label: 'Ticket type',
+             position: 10 
+             }  
+
+]
+@UI.lineItem: [ { position: 10, importance: #HIGH, label: 'TicketTypeId'} ]
+@UI.identification: [ { position: 10 } ]
+@UI.selectionField: [ { position: 10 } ]
+TicketTypeId; 
+
+@UI.lineItem: [ { position: 20, importance: #HIGH, label: 'TicketTypeName' } ]
+@UI.identification: [ { position: 20 } ]
+@UI.selectionField: [ { position: 20 } ]
+TicketTypeName;
+
+@UI.lineItem: [ { position: 30, importance: #HIGH, label: 'EventId'} ]
+@UI.identification: [ { position: 30 } ]
+@UI.selectionField: [ { position: 30 } ]
+EventId;
+
+@UI.lineItem: [ { position: 40, importance: #HIGH, label: 'Price' } ]
+@UI.identification: [ { position: 40 } ]
+@UI.selectionField: [ { position: 40 } ]
+Price;
+
+@UI.lineItem: [ { position: 50, importance: #HIGH, label: 'TotalQuantity'} ]
+@UI.identification: [ { position: 50 } ]
+@UI.selectionField: [ { position: 50 } ]
+TotalQuantity;
+
+@UI.lineItem: [ { position: 60, importance: #HIGH, label: 'AvailableQuantity' } ]
+@UI.identification: [ { position: 60 } ]
+@UI.selectionField: [ { position: 60 } ]
+AvailableQuantity;
+
+@UI.lineItem: [ { position: 70, importance: #HIGH, label: 'Status' } ]
+@UI.identification: [ { position: 70 } ]
+Status;
+
+@UI.hidden: true
+CurrencyCode;
+
+@UI.hidden: true
+CreatedBy;
+
+@UI.hidden: true
+CreatedAt;
+
+@UI.hidden: true
+LastChangedBy;
+
+@UI.hidden: true
+LastChangedAt;
+
+@UI.hidden: true
+LocalLastChangedAt; 
+}
