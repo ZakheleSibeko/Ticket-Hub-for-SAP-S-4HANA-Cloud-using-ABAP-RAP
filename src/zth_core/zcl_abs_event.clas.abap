@@ -71,6 +71,7 @@ CLASS zcl_abs_event IMPLEMENTATION.
           EXPORTING
               textid = zcx_event=>invalid_capacity.
      ENDIF.
+
   ENDMETHOD.
 
 ENDCLASS.

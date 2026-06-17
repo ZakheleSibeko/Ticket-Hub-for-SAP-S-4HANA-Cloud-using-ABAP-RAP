@@ -22,10 +22,10 @@ CLASS zcl_conference_event IMPLEMENTATION.
 
    METHOD constructor.
     super->constructor(
-       is_event = is_event
-       ).
+       is_event = is_event ).
      mv_name = is_event-event_name.
      mv_event_id = is_event-event_id.
+     mv_event_type = is_event-event_type.
   ENDMETHOD.
 
   METHOD zif_event~calculate_available_capacity.
